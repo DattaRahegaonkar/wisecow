@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wisecow-deployment
+  namespace: wisecow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wisecow
+  template:
+    metadata:
+      labels:
+        app: wisecow
+    spec:
+      containers:
+      - name: wisecow
+        image: dattarahegaonkar09/wisecow:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+        ports:
+        - containerPort: 4499
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: wisecow-service
+  namespace: wisecow
+spec:
+  selector:
+    app: wisecow
+  ports:
+  - protocol: TCP
+    port: 4499
+    targetPort: 4499
+    nodePort: 30499
+  type: NodePort
