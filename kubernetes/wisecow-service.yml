@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: wisecow-service
+  namespace: wisecow
+spec:
+  selector:
+    app: wisecow
+  ports:
+  - protocol: TCP
+    port: 4499
+    targetPort: 4499
+  type: ClusterIP
